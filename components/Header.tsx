@@ -11,10 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
-
+import { useRouter, usePathname } from "next/navigation";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const router = useRouter();
+  const pathname = usePathname();
+  console.log(pathname);
   const navigationItems = [
     { name: "Home", href: "/" },
     { name: "Hotels", href: "#" },
@@ -28,7 +30,7 @@ const Header = () => {
       <div className="xl:mx-20 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center cursor-pointer" onClick={() => router.push("/")}>
             <Image
               src="/logo3.png"
               alt="DAYF Booking Logo"
@@ -48,12 +50,12 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:block">
-            <div className="ml-10 flex items-baseline space-x-3">
+            <div className="ml-10 flex items-baseline space-x-0.5 xl:space-x-3">
               {navigationItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700  hover:text-blue-600 px-3 py-2 transition-colors duration-200"
+                  className={`  hover:text-blue-600 px-3 py-2 transition-colors duration-200 ${item.href === pathname ? "text-blue-600" : "text-gray-700"}`}
                 >
                   {item.name}
                 </a>
